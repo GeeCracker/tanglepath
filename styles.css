@@ -13,12 +13,15 @@ body {
     font-family: sans-serif;
 }
 
+#mapBox {
+    margin: auto;
+}
+
 #map {
-    height: 400px;
-    width: 800px;
+    width: 100%;
+    height: 100%;
     color: black;
     font-size: 12pt;
-    margin: auto;
     border-width: 1px;
     border-style: solid;
     border-color: red;
