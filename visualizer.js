@@ -2,11 +2,12 @@ var paper
 var MAX_RAD = 25; //circle max radius
 var MIN_RAD = 5; //circle min radius
 //testing coordinates
-var coords = [[20,20,2], [40,30,5], [67, 89, 7], [200, 100, 4], [567, 36, 5], [600, 300, 2], [40, 200, 1]]
+var coords = [[20,40,2], [40,78,5], [67, 89, 7], [200, 100, 4], [567, 27, 5], [600, 300, 2], [40, 200, 1]]
 
 //setting drawable canvas bounds
-function setBounds(height, width) {
+function setBounds(width, height) {
     paper = Raphael("map", width, height);
+    //document.getElementById("test").innerHTML = [width, height]; //testing
 }
 
 //drawing a circle at x,y with radius rad
@@ -37,13 +38,42 @@ function radii(coords) {
         if (coords[i][2] < MIN_RAD) {
             coords[i][2] = MIN_RAD; //minimum visible value
         }
-        document.getElementById("test").innerHTML = coords; //testing
+        //document.getElementById("test").innerHTML = coords; //testing
     }
+}
+
+//converts coordinates to relative coordinates
+function realtiveCoords(coords) {
+    var minx = coords[0][0];
+    var maxx = coords[0][0];
+    var miny = coords[0][1];
+    var maxy = coords[0][1];
+    //finding minimum and maximum coordinate values
+    for (var i = 0; i<coords.length; i++){
+        if (coords[i][0] < minx)
+            {minx = coords[i][0];}
+        else if (coords[i][0] > maxx)
+            {maxx = coords[i][0];}
+        if (coords[i][1] < miny)
+            {miny = coords[i][1];}
+        else if (coords[i][1] > maxy)
+            {maxy = coords[i][1];}
+    } 
+    //changing coordinates  to minimum relatvie positions
+    for (var i = 0; i<coords.length; i++){
+        coords[i][0] = coords[i][0] - minx + MAX_RAD;
+        coords[i][1] = coords[i][1] - miny + MAX_RAD;
+        maxx += 25;
+        maxy += 25;
+    }
+    //creating relative drawable frame
+    setBounds(maxx, maxy);
 }
 
 //full tangle builder and visualizer
 function buildTangle(coords) {
     //setting relative radii
+    realtiveCoords(coords);
     radii(coords);
     for (var i=0; i<coords.length; i++) {
         //building circles
