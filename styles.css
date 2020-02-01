@@ -15,6 +15,10 @@ body {
 
 #mapBox {
     margin: auto;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/95/World_map_green.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #map {

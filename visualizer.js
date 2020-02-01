@@ -11,6 +11,7 @@ var addyParts;
 //setting drawable canvas bounds
 function setBounds(width, height) {
     paper = Raphael("map", width, height);
+    
     document.getElementById("mapBox").style.height = height + "px";
     document.getElementById("mapBox").style.width = width + "px";
     //document.getElementById("test").innerHTML = [width, height]; //testing
@@ -19,7 +20,7 @@ function setBounds(width, height) {
 //setting background image of mapBox
 function drawGoogleMap(address) {
     //document.getElementById("test").innerHTML = address; //testing
-    document.getElementById("mapBox").style.backgroundImage = "url("+address+")";
+    //document.getElementById("mapBox").style.backgroundImage = "url(https://upload.wikimedia.org/wikipedia/commons/9/95/World_map_green.png)";
 }
 
 //getting formmatted world map
