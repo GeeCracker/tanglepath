@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#title {
+    width: 100vw;
+    margin-top: 5vh;
+    color: peru;
+    font-size: 30pt;
+    text-align: center;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+#map {
+    height: 400px;
+    width: 800px;
+    color: black;
+    font-size: 12pt;
+    margin: auto;
+    border-width: 1px;
+    border-style: solid;
+    border-color: red;
+    border-image: initial;
+}
