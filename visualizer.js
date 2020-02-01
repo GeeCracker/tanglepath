@@ -1,8 +1,9 @@
 var paper
 var MAX_RAD = 25; //circle max radius
 var MIN_RAD = 5; //circle min radius
+var SCALE = 100;
 //testing coordinates
-//var coords = [[20,40,2], [40,78,5], [67, 89, 7], [200, 100, 4], [567, 27, 5], [600, 300, 2], [40, 200, 1]]
+//var coords = [[20.5,40,2], [40,78.47624,5], [67, 89, 7], [200, 100, 4], [567, 27, 5], [600, 300, 2], [40, 200, 1]]
 
 //setting drawable canvas bounds
 function setBounds(width, height) {
@@ -42,8 +43,16 @@ function radii(coords) {
     }
 }
 
+//converting lat long to usable coords
+function geoCoordstoUsable(coords) {
+    for(var i = 0; i<coords.length; i++){
+        coords[i][0] = (coords[i][0]+180)*SCALE;
+        coords[i][1] += (90-coords[i][1])*SCALE;
+    } //document.getElementById("test").innerHTML = coords; //testing
+}
+
 //converts coordinates to relative coordinates
-function realtiveCoords(coords) {
+function relativeCoords(coords) {
     var minx = coords[0][0];
     var maxx = coords[0][0];
     var miny = coords[0][1];
@@ -61,20 +70,22 @@ function realtiveCoords(coords) {
     } 
     //changing coordinates  to minimum relatvie positions
     for (var i = 0; i<coords.length; i++){
-        coords[i][0] = coords[i][0] - minx + MAX_RAD;
-        coords[i][1] = coords[i][1] - miny + MAX_RAD;
         maxx += 25;
         maxy += 25;
-    }
+        coords[i][0] = coords[i][0] - minx + MAX_RAD;
+        coords[i][1] = coords[i][1] - miny + MAX_RAD;
+    } //document.getElementById("test").innerHTML = coords; //testing
     //creating relative drawable frame
     setBounds(maxx, maxy);
 }
 
 //full tangle builder and visualizer
 function buildTangle(coords) {
+    geoCoordstoUsable(coords);
     //setting relative radii
-    realtiveCoords(coords);
+    relativeCoords(coords);
     radii(coords);
+    document.getElementById("test").innerHTML = coords; //testing   
     for (var i=0; i<coords.length; i++) {
         //building circles
         circle(coords[i][0], coords[i][1], coords[i][2]);

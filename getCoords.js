@@ -16,7 +16,7 @@ function retrieveCoordinates(address) {
 
 function encodeAddress(city, state) {
     address = "https://maps.googleapis.com/maps/api/geocode/json?components=";
-    address = address + "locality:" + city + "&";
+    address = address + "locality:" + city + "|";
     address = address + "administrative_area_level_1:" + state;
     return address;
 }
@@ -30,16 +30,21 @@ function addCoordinates(coords, userAddress, radius) {
 city = "Toronto";
 state = "Ontario";
 userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
-
-//document.getElementById("test").innerHTML = userAddress;
-//document.getElementById("test").innerHTML = retrieveCoordinates(userAddress);
-
 addCoordinates(coords, userAddress, 2);
 
 city = "Kingston";
 state = "Ontario";
 userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
+addCoordinates(coords, userAddress, 2);
 
+city = "Ottawa";
+state = "Ontario";
+userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
+addCoordinates(coords, userAddress, 2);
+
+city = "Oakville";
+state = "Ontario";
+userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
 addCoordinates(coords, userAddress, 2);
 
 //printString = ""
