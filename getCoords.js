@@ -10,7 +10,7 @@ function retrieveCoordinates(address) {
     var obj = JSON.parse(retrieveJSON(address));
     longitude = obj.results[0].geometry.location.lng;
     latitude = obj.results[0].geometry.location.lat;
-    var coordinates = [latitude, longitude];
+    var coordinates = [longitude, latitude];
     return coordinates;
 }
 
@@ -21,10 +21,37 @@ function encodeAddress(city, state) {
     return address;
 }
 
+function addCoordinates(coords, userAddress, radius) {
+    singleCoordinate = retrieveCoordinates(userAddress);
+    singleCoordinate.push(radius);
+    coords.push(singleCoordinate);
+}
+
 city = "Toronto";
 state = "Ontario";
-
 userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
 
 //document.getElementById("test").innerHTML = userAddress;
-document.getElementById("test").innerHTML = retrieveCoordinates(userAddress);
+//document.getElementById("test").innerHTML = retrieveCoordinates(userAddress);
+
+addCoordinates(coords, userAddress, 2);
+
+city = "Kingston";
+state = "Ontario";
+userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
+
+addCoordinates(coords, userAddress, 2);
+
+//printString = ""
+
+// for (var i in coords) {
+//     printString = printString + "["
+
+//     for (var j in coords[i]) {
+//         printString = printString + coords[i][j] + "|"
+//     }
+
+//     printString = printString + "]"
+// }
+
+document.getElementById("test").innerHTML = coords;
