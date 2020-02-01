@@ -18,6 +18,7 @@ function encodeAddress(city, state) {
     address = "https://maps.googleapis.com/maps/api/geocode/json?components=";
     address = address + "locality:" + city + "|";
     address = address + "administrative_area_level_1:" + state;
+    address = address + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
     return address;
 }
 
@@ -27,25 +28,8 @@ function addCoordinates(coords, userAddress, radius) {
     coords.push(singleCoordinate);
 }
 
-city = "Toronto";
-state = "Ontario";
-userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
-addCoordinates(coords, userAddress, 2);
-
-city = "Kingston";
-state = "Ontario";
-userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
-addCoordinates(coords, userAddress, 2);
-
-city = "Ottawa";
-state = "Ontario";
-userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
-addCoordinates(coords, userAddress, 2);
-
-city = "Oakville";
-state = "Ontario";
-userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
-addCoordinates(coords, userAddress, 2);
+//userAddress = encodeAddress(city, state);
+//addCoordinates(coords, userAddress, 2);
 
 //printString = ""
 
@@ -59,4 +43,4 @@ addCoordinates(coords, userAddress, 2);
 //     printString = printString + "]"
 // }
 
-document.getElementById("test").innerHTML = coords;
+//document.getElementById("test").innerHTML = coords;

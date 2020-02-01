@@ -16,13 +16,13 @@ function setBounds(width, height) {
 //drawing a circle at x,y with radius rad
 function circle(x, y, rad) {
     var circle = paper.circle(x, y, rad);
-    circle.attr({"fill": "blue", "stroke-width":0}); //styling
+    circle.attr({"fill": "forestgreen", "stroke-width":0}); //styling
 }
 
 //drawing line from x1,y1 to x2,y2
 function line(x1, y1, x2, y2) {
     var line = paper.path( ["M", x1, y1, "L", x2, y2 ] );
-    line.attr({"stroke-width":10, "stroke":"blue"}); //styling
+    line.attr({"stroke-width":10, "stroke":"forestgreen"}); //styling
 }
 
 //setting relative radii of circles from Max to see differences in duration
