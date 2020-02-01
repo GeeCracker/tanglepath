@@ -2,15 +2,54 @@ var paper
 var MAX_RAD = 25; //circle max radius
 var MIN_RAD = 5; //circle min radius
 var SCALE = 100;
+var WIDTH, HEIGHT;
+var addyParts;
+//document.getElementById("test").innerHTML = realCoords; //testing
 //testing coordinates
 //var coords = [[20.5,40,2], [40,78.47624,5], [67, 89, 7], [200, 100, 4], [567, 27, 5], [600, 300, 2], [40, 200, 1]]
 
 //setting drawable canvas bounds
 function setBounds(width, height) {
     paper = Raphael("map", width, height);
+    
     document.getElementById("mapBox").style.height = height + "px";
     document.getElementById("mapBox").style.width = width + "px";
     //document.getElementById("test").innerHTML = [width, height]; //testing
+}
+
+//setting background image of mapBox
+function drawGoogleMap(address) {
+    //document.getElementById("test").innerHTML = address; //testing
+    //document.getElementById("mapBox").style.backgroundImage = "url(https://upload.wikimedia.org/wikipedia/commons/9/95/World_map_green.png)";
+}
+
+//getting formmatted world map
+function getGoogleMap(coords) {
+    var centCoords = avgLatLon(coords);
+    var center = centCoords[0]+","+centCoords[1];
+    var zoom = 7;
+    var add1 = "https://maps.googleapis.com/maps/api/staticmap?center="+center+"&zoom="+zoom+"&size=";
+    var add2 = "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
+    return [add1, add2];
+}
+
+function addSize(addParts) {
+    var size = Math.round(WIDTH)+"x"+Math.round(HEIGHT);
+    return addParts[0]+size+addParts[1];
+}
+
+//finding center average of all points
+function avgLatLon(coords) {
+    var avgLat = 0;
+    var avgLon = 0;
+    for (var i=0; i < coords.length; i++){
+        avgLat += coords[i][1];
+        avgLon += coords[i][0];
+    }
+    avgLat = avgLat/coords.length;
+    avgLon = avgLon/coords.length;
+    //document.getElementById("test").innerHTML = [avgLat, avgLon]; //testing
+    return [avgLat, avgLon];
 }
 
 //drawing a circle at x,y with radius rad
@@ -47,6 +86,7 @@ function radii(coords) {
 
 //converting lat long to usable coords
 function geoCoordstoUsable(coords) {
+    addyParts = getGoogleMap(coords);
     for(var i = 0; i<coords.length; i++){
         coords[i][0] = (coords[i][0]+180)*SCALE;
         coords[i][1] += (90-coords[i][1])*SCALE;
@@ -82,7 +122,12 @@ function relativeCoords(coords) {
             {maxy = coords[i][1]+50;}
     } //document.getElementById("test").innerHTML = coords; //testing
     //creating relative drawable frame
-    setBounds(maxx, maxy);
+    HEIGHT = maxy;
+    WIDTH = maxx;
+    setBounds(WIDTH, HEIGHT);
+    var addy = addSize(addyParts);
+    drawGoogleMap(addy);
+    document.getElementById("test").innerHTML = addy;
 }
 
 //full tangle builder and visualizer
@@ -91,7 +136,7 @@ function buildTangle(coords) {
     //setting relative radii
     relativeCoords(coords);
     radii(coords);
-    document.getElementById("test").innerHTML = coords; //testing   
+    //document.getElementById("test").innerHTML = coords; //testing   
     for (var i=0; i<coords.length; i++) {
         //building circles
         circle(coords[i][0], coords[i][1], coords[i][2]);
@@ -110,4 +155,6 @@ setBounds(400, 800);
 //circle(coords[2][0], coords[2][1], 15);
 //line(50, 50, 100, 100);
 
+document.getElementById("test").innerHTML = coords; //testing
 buildTangle(coords);
+drawGoogleMap(getGoogleMap(realCoords));
