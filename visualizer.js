@@ -8,6 +8,8 @@ var SCALE = 100;
 //setting drawable canvas bounds
 function setBounds(width, height) {
     paper = Raphael("map", width, height);
+    document.getElementById("mapBox").style.height = height + "px";
+    document.getElementById("mapBox").style.width = width + "px";
     //document.getElementById("test").innerHTML = [width, height]; //testing
 }
 
@@ -68,12 +70,16 @@ function relativeCoords(coords) {
         else if (coords[i][1] > maxy)
             {maxy = coords[i][1];}
     } 
+    maxx = 0;
+    maxy = 0;
     //changing coordinates  to minimum relatvie positions
     for (var i = 0; i<coords.length; i++){
-        maxx += 25;
-        maxy += 25;
         coords[i][0] = coords[i][0] - minx + MAX_RAD;
         coords[i][1] = coords[i][1] - miny + MAX_RAD;
+        if(coords[i][0] > maxx)
+            {maxx = coords[i][0]+25;}
+        if(coords[i][1] > maxy)
+            {maxy = coords[i][1]+50;}
     } //document.getElementById("test").innerHTML = coords; //testing
     //creating relative drawable frame
     setBounds(maxx, maxy);
