@@ -41,6 +41,9 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    height: 0px;
+    width: 0px;
+    border: 2px dashed seagreen;
 }
 
 #map {
@@ -49,7 +52,6 @@ body {
     color: black;
     font-size: 12pt;
     margin: auto;
-    border: 2px dashed seagreen;
 }
 
 .tagline {

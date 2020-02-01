@@ -11,7 +11,6 @@ var addyParts;
 //setting drawable canvas bounds
 function setBounds(width, height) {
     paper = Raphael("map", width, height);
-    
     document.getElementById("mapBox").style.height = height + "px";
     document.getElementById("mapBox").style.width = width + "px";
     //document.getElementById("test").innerHTML = [width, height]; //testing
@@ -86,7 +85,7 @@ function radii(coords) {
 
 //converting lat long to usable coords
 function geoCoordstoUsable(coords) {
-    addyParts = getGoogleMap(coords);
+    //addyParts = getGoogleMap(coords);
     for(var i = 0; i<coords.length; i++){
         coords[i][0] = (coords[i][0]+180)*SCALE;
         coords[i][1] += (90-coords[i][1])*SCALE;
@@ -125,9 +124,9 @@ function relativeCoords(coords) {
     HEIGHT = maxy;
     WIDTH = maxx;
     setBounds(WIDTH, HEIGHT);
-    var addy = addSize(addyParts);
-    drawGoogleMap(addy);
-    document.getElementById("test").innerHTML = addy;
+    //var addy = addSize(addyParts);
+    //drawGoogleMap(addy);
+    //document.getElementById("test").innerHTML = addy;
 }
 
 //full tangle builder and visualizer
