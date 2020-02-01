@@ -47,6 +47,16 @@ state = "Ontario";
 userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
 addCoordinates(coords, userAddress, 2);
 
+city = "Mississauga";
+state = "Ontario";
+userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
+addCoordinates(coords, userAddress, 2);
+
+city = "Detroit";
+state = "Michigan";
+userAddress = encodeAddress(city, state) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
+addCoordinates(coords, userAddress, 2);
+
 //printString = ""
 
 // for (var i in coords) {
@@ -58,5 +68,3 @@ addCoordinates(coords, userAddress, 2);
 
 //     printString = printString + "]"
 // }
-
-document.getElementById("test").innerHTML = coords;
