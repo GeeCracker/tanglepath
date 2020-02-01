@@ -3,21 +3,54 @@
     <head>
         <link href="styles.css" rel="stylesheet" type="text/css">
         <script src="http://math.mercyhurst.edu/~lwilliams/js/raphael-min.js"></script>
+
+        <script type="text/javascript" src="getCoords.js"></script>
+        <script type="text/javascript" src="visualizer.js"></script>
+
     </head>
     <body>
 
         <script type="text/javascript">
+            var locations = [];
             var coords = [];
+            function updateLocation() {
+                var city = document.getElementById("city").value;
+                var state = document.getElementById("state").value;
+                locations.push([city, state])
+                alert(city + " has been added.")
+
+                coords = []
+                for(var i = 0, len = locations.length; i < len; ++i)
+                    addCoordinates(coords, encodeAddress(locations[i][0], locations[i][1]), 2);
+            }
+            function build() {
+                buildTangle(coords);
+            }
         </script>
 
         <div id="title">TANGLEPATH</div>
-        <div id="mapBox">
-            <div id="map"></div>
-        </div>
-        <div id="test"></div>
+        <div class="tagline">"find your path."</div>
 
-        <script type="text/javascript" src="getCoords.js"></script>
-        <script type="text/javascript" src="visualizer.js"></script>
+        <div class="form">
+            <form> 
+                <div style="float:left;">City:</div>
+                <input class="inBox" type="text" name="city" id="city">
+            </form><br>
+            <form> 
+                <div style="float:left;">State/Provine:</div>
+                <input class="inBox" type="text" name="state" id="state">
+            </form><br>
+            <form>
+                <div style="float:left;">Years:</div>
+                <input class="inBox" type="text" name="time" id="time"><br>
+                <div class="buttons">
+                    <button type="button" onclick="updateLocation()">Add Location</button>
+                    <button type="button" onclick="build()">Build Tangle</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="map"></div>
 
     </body>
 </html>
