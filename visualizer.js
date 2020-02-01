@@ -2,7 +2,7 @@ var paper
 var MAX_RAD = 25; //circle max radius
 var MIN_RAD = 5; //circle min radius
 //testing coordinates
-var coords = [[20,40,2], [40,78,5], [67, 89, 7], [200, 100, 4], [567, 27, 5], [600, 300, 2], [40, 200, 1]]
+//var coords = [[20,40,2], [40,78,5], [67, 89, 7], [200, 100, 4], [567, 27, 5], [600, 300, 2], [40, 200, 1]]
 
 //setting drawable canvas bounds
 function setBounds(width, height) {
