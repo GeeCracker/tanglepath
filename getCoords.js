@@ -1,17 +1,26 @@
-//https://stackoverflow.com/questions/2499567/how-to-make-a-json-call-to-a-url/2499647#2499647
-function retrieveJSON(address) {
-    var Httpreq = new XMLHttpRequest(); // a new request
-    Httpreq.open("GET",address,false);
-    Httpreq.send(null);
-    return Httpreq.responseText;          
+function addCoordinates(coords, address, radius) {
+    singleCoordinate = retrieveCoordinates(address);
+    if (typeof(singleCoordinate) == "object") {
+        singleCoordinate.push(radius);
+        coords.push(singleCoordinate);
+    }
 }
 
 function retrieveCoordinates(address) {
     var obj = JSON.parse(retrieveJSON(address));
-    longitude = obj.results[0].geometry.location.lng;
-    latitude = obj.results[0].geometry.location.lat;
-    var coordinates = [longitude, latitude];
-    return coordinates;
+    var regions = ["locality", "sublocality", "postal_code", "country", "administrative_level_1", "administrative_level_2"];
+    var cities = ["locality", "administrative_area_3"];
+    if(obj.results.length == 0) {
+        return;
+    }
+    for (var x in obj.results[0].types) {
+        if (regions.includes(obj.results[0].types[x]) || cities.includes(obj.results[0].types[x])) {
+            longitude = obj.results[0].geometry.location.lng;
+            latitude = obj.results[0].geometry.location.lat;
+            var coordinates = [longitude, latitude];
+            return coordinates;
+        }
+    }
 }
 
 function encodeAddress(city, state) {
@@ -22,10 +31,12 @@ function encodeAddress(city, state) {
     return address;
 }
 
-function addCoordinates(coords, userAddress, radius) {
-    singleCoordinate = retrieveCoordinates(userAddress);
-    singleCoordinate.push(radius);
-    coords.push(singleCoordinate);
+//https://stackoverflow.com/questions/2499567/how-to-make-a-json-call-to-a-url/2499647#2499647
+function retrieveJSON(address) {
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",address,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
 }
 
 //userAddress = encodeAddress(city, state);

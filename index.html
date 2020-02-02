@@ -14,14 +14,23 @@
             var locations = [];
             var coords = [];
             function updateLocation() {
+                alert(locations, coords);
                 var city = document.getElementById("city").value;
                 var state = document.getElementById("state").value;
-                locations.push([city, state])
-                alert(city + " has been added.")
+                locations.push([city, state]);
 
-                coords = []
-                for(var i = 0, len = locations.length; i < len; ++i)
-                    addCoordinates(coords, encodeAddress(locations[i][0], locations[i][1]), 2);
+                coords = [];
+                for(var i = 0; i < locations.length; ++i) {
+                    addCoordinates(coords, encodeAddress(locations[i][0], locations[i][1]) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc", 2);
+                }
+
+                if(coords.length != locations.length) {
+                    alert("Error adding your given location");
+                    locations.pop();
+                }
+                else if(coords.length == locations.length) {
+                    alert(city + " has been added.");
+                }
             }
             function build() {
                 buildTangle(coords);
