@@ -13,26 +13,50 @@
         <script type="text/javascript">
             var locations = [];
             var coords = [];
+            var times = [];
+            var count = 0;
+
             function updateLocation() {
                 alert(locations, coords);
                 var city = document.getElementById("city").value;
                 var state = document.getElementById("state").value;
-                locations.push([city, state]);
 
-                coords = [];
-                for(var i = 0; i < locations.length; ++i) {
-                    addCoordinates(coords, encodeAddress(locations[i][0], locations[i][1]) + "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc", 2);
-                }
+                var years = document.getElementById("time").value;
+                if(city == "" || years == ""){
+                    alert("Please fill out all required (*) fields!");
+                } else {
+                    if(isNaN(years)){
+                        alert("Please enter a number into the 'years' field.");
+                    } else {
+                        locations.push([city, state]);
+                        times.push(years);
 
-                if(coords.length != locations.length) {
-                    alert("Error adding your given location");
-                    locations.pop();
-                }
-                else if(coords.length == locations.length) {
-                    alert(city + " has been added.");
+                        var ul = document.getElementById("locationList");
+                        var li = document.createElement("li");
+                        li.setAttribute('id',"listLocation");
+                        li.appendChild(document.createTextNode(locations[count][0]+", "+locations[count][1]+" ("+times[count]+")"));
+                        ul.appendChild(li);
+                        count++;
+
+                        coords = [];
+                        for(var i = 0, len = locations.length; i < len; ++i)
+                            addCoordinates(coords, encodeAddress(locations[i][0], locations[i][1]), times[i]);
+                        
+                        if(coords.length != locations.length) {
+                            alert("Error adding your given location");
+                            locations.pop();
+                        }
+                        else if(coords.length == locations.length) {
+                            alert(city + " has been added.");
+                        }
+                    }
                 }
             }
             function build() {
+                document.getElementById("builder").disabled = true;
+                document.getElementById("builder").style.opacity = 0;
+                document.getElementById("adder").disabled = true;
+                document.getElementById("adder").style.opacity = 0;
                 buildTangle(coords);
             }
         </script>
@@ -42,21 +66,27 @@
 
         <div class="form">
             <form> 
-                <div style="float:left;">City:</div>
+                <div style="float:left;">City*:</div>
                 <input class="inBox" type="text" name="city" id="city">
             </form><br>
             <form> 
-                <div style="float:left;">State/Provine:</div>
+                <div style="float:left;">State/Province:</div>
                 <input class="inBox" type="text" name="state" id="state">
             </form><br>
             <form>
-                <div style="float:left;">Years:</div>
+                <div style="float:left;">Years*:</div>
                 <input class="inBox" type="text" name="time" id="time"><br>
                 <div class="buttons">
-                    <button type="button" onclick="updateLocation()">Add Location</button>
-                    <button type="button" onclick="build()">Build Tangle</button>
+                    <button type="button" id="adder" onclick="updateLocation()">Add Location</button>
+                    <button type="button" id="builder" onclick="build()">Build Tangle</button>
                 </div>
             </form>
+        </div>
+
+        <div class="locList">
+            <ul id="locationList">
+                <li style="font-weight:bold;text-decoration:underline;" id="listLocation">Locations:</li>
+            </ul>
         </div>
 
         <div id="mapBox">

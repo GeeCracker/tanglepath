@@ -11,6 +11,7 @@ var addyParts;
 //setting drawable canvas bounds
 function setBounds(width, height) {
     paper = Raphael("map", width, height);
+    
     document.getElementById("mapBox").style.height = height + "px";
     document.getElementById("mapBox").style.width = width + "px";
     //document.getElementById("test").innerHTML = [width, height]; //testing
@@ -83,9 +84,37 @@ function radii(coords) {
     }
 }
 
+//reduce coordinate scaling until tangle fits into frame
+function setScaling(coords) {
+    var maxx = coords[0][0]*SCALE;
+    var minx = coords[0][0]*SCALE;
+    var maxy = coords[0][1]*SCALE;
+    var miny = coords[0][1]*SCALE
+    for(var i=0; i<coords.length; i++) {
+        if (coords[i][0]*SCALE < minx)
+            {minx = coords[i][0]*SCALE;}
+        else if (coords[i][0]*SCALE > maxx)
+            {maxx = coords[i][0]*SCALE;}
+        if (coords[i][1]*SCALE < miny)
+            {miny = coords[i][1]*SCALE;}
+        else if (coords[i][1]*SCALE > maxy)
+            {maxy = coords[i][1]*SCALE;}
+    }
+    var viewX = screen.width;
+    var viewY = screen.height;
+    if((maxx-minx) > viewX || (maxy-miny) > viewY) {
+        if(SCALE <= 5)
+            SCALE -= 1;
+        else
+            SCALE -= 5;
+        setScaling(coords);
+    }
+}
+
 //converting lat long to usable coords
 function geoCoordstoUsable(coords) {
-    //addyParts = getGoogleMap(coords);
+    setScaling(coords);//set scaling
+    alert(SCALE);
     for(var i = 0; i<coords.length; i++){
         coords[i][0] = (coords[i][0]+180)*SCALE;
         coords[i][1] += (90-coords[i][1])*SCALE;
@@ -111,6 +140,7 @@ function relativeCoords(coords) {
     } 
     maxx = 0;
     maxy = 0;
+    alert(minx);
     //changing coordinates  to minimum relatvie positions
     for (var i = 0; i<coords.length; i++){
         coords[i][0] = coords[i][0] - minx + MAX_RAD;
@@ -119,14 +149,11 @@ function relativeCoords(coords) {
             {maxx = coords[i][0]+25;}
         if(coords[i][1] > maxy)
             {maxy = coords[i][1]+50;}
-    } //document.getElementById("test").innerHTML = coords; //testing
+    } alert(coords);
     //creating relative drawable frame
     HEIGHT = maxy;
     WIDTH = maxx;
     setBounds(WIDTH, HEIGHT);
-    //var addy = addSize(addyParts);
-    //drawGoogleMap(addy);
-    //document.getElementById("test").innerHTML = addy;
 }
 
 //full tangle builder and visualizer
