@@ -47,8 +47,6 @@ body {
 }
 
 #map {
-    width: 800px;
-    height: 400px;
     color: black;
     font-size: 12pt;
     margin: auto;
