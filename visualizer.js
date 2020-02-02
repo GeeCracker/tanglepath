@@ -1,6 +1,6 @@
 var paper
 var MAX_RAD = 25; //circle max radius
-var MIN_RAD = 5; //circle min radius
+var MIN_RAD = 7; //circle min radius
 var SCALE = 100;
 var WIDTH, HEIGHT;
 var addyParts;
@@ -15,41 +15,6 @@ function setBounds(width, height) {
     document.getElementById("mapBox").style.height = height + "px";
     document.getElementById("mapBox").style.width = width + "px";
     //document.getElementById("test").innerHTML = [width, height]; //testing
-}
-
-//setting background image of mapBox
-function drawGoogleMap(address) {
-    //document.getElementById("test").innerHTML = address; //testing
-    //document.getElementById("mapBox").style.backgroundImage = "url(https://upload.wikimedia.org/wikipedia/commons/9/95/World_map_green.png)";
-}
-
-//getting formmatted world map
-function getGoogleMap(coords) {
-    var centCoords = avgLatLon(coords);
-    var center = centCoords[0]+","+centCoords[1];
-    var zoom = 7;
-    var add1 = "https://maps.googleapis.com/maps/api/staticmap?center="+center+"&zoom="+zoom+"&size=";
-    var add2 = "&key=AIzaSyCEp7beuCu9-5XxRZ0u7gcVSkIRui4n8oc";
-    return [add1, add2];
-}
-
-function addSize(addParts) {
-    var size = Math.round(WIDTH)+"x"+Math.round(HEIGHT);
-    return addParts[0]+size+addParts[1];
-}
-
-//finding center average of all points
-function avgLatLon(coords) {
-    var avgLat = 0;
-    var avgLon = 0;
-    for (var i=0; i < coords.length; i++){
-        avgLat += coords[i][1];
-        avgLon += coords[i][0];
-    }
-    avgLat = avgLat/coords.length;
-    avgLon = avgLon/coords.length;
-    //document.getElementById("test").innerHTML = [avgLat, avgLon]; //testing
-    return [avgLat, avgLon];
 }
 
 //drawing a circle at x,y with radius rad
@@ -80,7 +45,6 @@ function radii(coords) {
         if (coords[i][2] < MIN_RAD) {
             coords[i][2] = MIN_RAD; //minimum visible value
         }
-        //document.getElementById("test").innerHTML = coords; //testing
     }
 }
 
@@ -114,7 +78,6 @@ function setScaling(coords) {
 //converting lat long to usable coords
 function geoCoordstoUsable(coords) {
     setScaling(coords);//set scaling
-    alert(SCALE);
     for(var i = 0; i<coords.length; i++){
         coords[i][0] = (coords[i][0]+180)*SCALE;
         coords[i][1] += (90-coords[i][1])*SCALE;
@@ -140,7 +103,6 @@ function relativeCoords(coords) {
     } 
     maxx = 0;
     maxy = 0;
-    alert(minx);
     //changing coordinates  to minimum relatvie positions
     for (var i = 0; i<coords.length; i++){
         coords[i][0] = coords[i][0] - minx + MAX_RAD;
@@ -149,7 +111,7 @@ function relativeCoords(coords) {
             {maxx = coords[i][0]+25;}
         if(coords[i][1] > maxy)
             {maxy = coords[i][1]+50;}
-    } alert(coords);
+    } 
     //creating relative drawable frame
     HEIGHT = maxy;
     WIDTH = maxx;

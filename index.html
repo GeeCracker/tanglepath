@@ -17,7 +17,6 @@
             var count = 0;
 
             function updateLocation() {
-                alert(locations, coords);
                 var city = document.getElementById("city").value;
                 var state = document.getElementById("state").value;
 
@@ -28,15 +27,13 @@
                     if(isNaN(years)){
                         alert("Please enter a number into the 'years' field.");
                     } else {
+
+                        document.getElementById("city").value = "";
+                        document.getElementById("state").value = "";
+                        document.getElementById("time").value = "";
+
                         locations.push([city, state]);
                         times.push(years);
-
-                        var ul = document.getElementById("locationList");
-                        var li = document.createElement("li");
-                        li.setAttribute('id',"listLocation");
-                        li.appendChild(document.createTextNode(locations[count][0]+", "+locations[count][1]+" ("+times[count]+")"));
-                        ul.appendChild(li);
-                        count++;
 
                         coords = [];
                         for(var i = 0, len = locations.length; i < len; ++i)
@@ -45,9 +42,14 @@
                         if(coords.length != locations.length) {
                             alert("Error adding your given location");
                             locations.pop();
-                        }
-                        else if(coords.length == locations.length) {
-                            alert(city + " has been added.");
+                            times.pop();
+                        } else {
+                            var ul = document.getElementById("locationList");
+                            var li = document.createElement("li");
+                            li.setAttribute('id',"listLocation");
+                            li.appendChild(document.createTextNode(locations[count][0]+", "+locations[count][1]+" ("+times[count]+")"));
+                            ul.appendChild(li);
+                            count++;
                         }
                     }
                 }
@@ -92,6 +94,8 @@
         <div id="mapBox">
         <div id="map"></div></div>
         <div id="test"></div>
+
+        <div class="tagline" style="font-size:10pt;">qHacks2020 project by Graham Carkner and Truman Be</div>
 
     </body>
 </html>
