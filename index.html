@@ -15,25 +15,34 @@
             var coords = [];
             var times = [];
             var count = 0;
+
             function updateLocation() {
                 var city = document.getElementById("city").value;
                 var state = document.getElementById("state").value;
                 var years = document.getElementById("time").value;
-                locations.push([city, state]);
-                times.push(years);
+                if(city == "" || years == ""){
+                    alert("Please fill out all required (*) fields!");
+                } else {
+                    locations.push([city, state]);
+                    times.push(years);
 
-                var ul = document.getElementById("locationList");
-                var li = document.createElement("li");
-                li.setAttribute('id',"listLocation");
-                li.appendChild(document.createTextNode(locations[count][0]+", "+locations[count][1]+" ("+times[count]+")"));
-                ul.appendChild(li);
-                count++;
+                    var ul = document.getElementById("locationList");
+                    var li = document.createElement("li");
+                    li.setAttribute('id',"listLocation");
+                    li.appendChild(document.createTextNode(locations[count][0]+", "+locations[count][1]+" ("+times[count]+")"));
+                    ul.appendChild(li);
+                    count++;
 
-                coords = [];
-                for(var i = 0, len = locations.length; i < len; ++i)
-                    addCoordinates(coords, encodeAddress(locations[i][0], locations[i][1]), times[i]);
+                    coords = [];
+                    for(var i = 0, len = locations.length; i < len; ++i)
+                        addCoordinates(coords, encodeAddress(locations[i][0], locations[i][1]), times[i]);
+                }
             }
             function build() {
+                document.getElementById("builder").disabled = true;
+                document.getElementById("builder").style.opacity = 0;
+                document.getElementById("adder").disabled = true;
+                document.getElementById("adder").style.opacity = 0;
                 buildTangle(coords);
             }
         </script>
@@ -54,8 +63,8 @@
                 <div style="float:left;">Years*:</div>
                 <input class="inBox" type="text" name="time" id="time"><br>
                 <div class="buttons">
-                    <button type="button" onclick="updateLocation()">Add Location</button>
-                    <button type="button" onclick="build()">Build Tangle</button>
+                    <button type="button" id="adder" onclick="updateLocation()">Add Location</button>
+                    <button type="button" id="builder" onclick="build()">Build Tangle</button>
                 </div>
             </form>
         </div>
